@@ -16,6 +16,7 @@
 		612545571C2D8E66006281D2 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612545561C2D8E66006281D2 /* CoreDataStack.swift */; };
 		612545611C2D91E2006281D2 /* VoiceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612545601C2D91E2006281D2 /* VoiceListViewController.swift */; };
 		612545A21C2DA4E0006281D2 /* Voice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612545A11C2DA4E0006281D2 /* Voice.swift */; };
+		612545A71C2DB0DE006281D2 /* SegueHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612545A61C2DB0DE006281D2 /* SegueHandlerType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		612545561C2D8E66006281D2 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		612545601C2D91E2006281D2 /* VoiceListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceListViewController.swift; sourceTree = "<group>"; };
 		612545A11C2DA4E0006281D2 /* Voice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Voice.swift; path = ../Voice.swift; sourceTree = "<group>"; };
+		612545A61C2DB0DE006281D2 /* SegueHandlerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueHandlerType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				612545231C2D8AB5006281D2 /* RecordingViewController.swift */,
 				612545601C2D91E2006281D2 /* VoiceListViewController.swift */,
 				612545251C2D8AB5006281D2 /* Main.storyboard */,
+				612545A51C2DAB03006281D2 /* Utils */,
 				612545551C2D8B7B006281D2 /* Data */,
 				612545541C2D8B42006281D2 /* Supporting Files */,
 			);
@@ -161,6 +164,14 @@
 				612545561C2D8E66006281D2 /* CoreDataStack.swift */,
 			);
 			name = Data;
+			sourceTree = "<group>";
+		};
+		612545A51C2DAB03006281D2 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				612545A61C2DB0DE006281D2 /* SegueHandlerType.swift */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,6 +311,7 @@
 				612545221C2D8AB5006281D2 /* AppDelegate.swift in Sources */,
 				612545611C2D91E2006281D2 /* VoiceListViewController.swift in Sources */,
 				612545A21C2DA4E0006281D2 /* Voice.swift in Sources */,
+				612545A71C2DB0DE006281D2 /* SegueHandlerType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

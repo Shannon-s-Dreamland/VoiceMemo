@@ -9,7 +9,7 @@
         <!--录音-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="VoiceMemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="RecordingViewController" customModule="VoiceMemo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -18,11 +18,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oua-TI-btT">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oua-TI-btT" userLabel="Play">
                                 <rect key="frame" x="190" y="278" width="44" height="44"/>
                                 <state key="normal" image="play_begin"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RmT-hT-nsN">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RmT-hT-nsN" userLabel="Record">
                                 <rect key="frame" x="278" y="278" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="G0d-EX-61c"/>
@@ -30,12 +30,18 @@
                                 </constraints>
                                 <state key="normal" title="Button" image="record_pause"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fhG-zZ-KJ8">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fhG-zZ-KJ8" userLabel="Save">
                                 <rect key="frame" x="366" y="285" width="30" height="30"/>
                                 <state key="normal" title="保存">
                                     <color key="titleColor" red="0.95294117649999999" green="0.59215686270000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bdq-MG-Aoh" userLabel="Time">
+                                <rect key="frame" x="300" y="234" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -43,6 +49,8 @@
                             <constraint firstItem="RmT-hT-nsN" firstAttribute="leading" secondItem="oua-TI-btT" secondAttribute="trailing" constant="44" id="9GF-ow-B9Q"/>
                             <constraint firstItem="oua-TI-btT" firstAttribute="centerY" secondItem="RmT-hT-nsN" secondAttribute="centerY" id="GVc-9M-fAT"/>
                             <constraint firstItem="fhG-zZ-KJ8" firstAttribute="leading" secondItem="RmT-hT-nsN" secondAttribute="trailing" constant="44" id="TAe-F9-5Sv"/>
+                            <constraint firstItem="bdq-MG-Aoh" firstAttribute="centerX" secondItem="RmT-hT-nsN" secondAttribute="centerX" id="UUv-Lw-Zm5"/>
+                            <constraint firstItem="RmT-hT-nsN" firstAttribute="top" secondItem="bdq-MG-Aoh" secondAttribute="bottom" constant="44" id="W4X-8q-8eO"/>
                             <constraint firstItem="fhG-zZ-KJ8" firstAttribute="centerY" secondItem="RmT-hT-nsN" secondAttribute="centerY" id="pju-O6-wLd"/>
                             <constraint firstItem="RmT-hT-nsN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="q9z-2e-0aN"/>
                         </constraints>
@@ -51,10 +59,16 @@
                         <barButtonItem key="rightBarButtonItem" image="list" id="qlJ-5y-HU4">
                             <color key="tintColor" red="0.95294117647058818" green="0.59215686274509804" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="clc-o5-EbM" kind="show" id="0pf-CY-yzu"/>
+                                <segue destination="clc-o5-EbM" kind="show" identifier="ShowVoiceList" id="0pf-CY-yzu"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="playButton" destination="oua-TI-btT" id="i93-oF-tUz"/>
+                        <outlet property="recordButton" destination="RmT-hT-nsN" id="dXv-b9-TEI"/>
+                        <outlet property="saveButton" destination="fhG-zZ-KJ8" id="hKY-hv-z5J"/>
+                        <outlet property="timeLabel" destination="bdq-MG-Aoh" id="cac-nU-ESF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -157,4 +171,5 @@
         <image name="play_begin" width="44" height="44"/>
         <image name="record_pause" width="44" height="44"/>
     </resources>
+    <color key="tintColor" red="0.95294117649999999" green="0.59215686270000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
 </document>
