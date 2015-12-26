@@ -37,19 +37,51 @@ class RecordingViewController: UIViewController, SegueHandlerType, TextFieldAler
         state = .Initial
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        playManager.delegate = self
+    }
     
     // MARK: Segue
     
     enum SegueIdentifier: String {
         case ShowVoiceList
     }
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if identifier == SegueIdentifier.ShowVoiceList.rawValue {
+            switch state {
+            case .Initial:
+                return true
+            default:
+                let cancel: AlertActionTuple = (title: NSLocalizedString("返回", comment: ""), style: .Cancel, { action in
+                })
+                let delete: AlertActionTuple = (title: NSLocalizedString("删除当前音频备忘录", comment: ""), style: .Destructive, { action in
+                    self.recordingManager.deleteRecordedAudio()
+                    self.state = .Initial
+                    self.performSegueWithIdentifier(.ShowVoiceList, sender: self)
+                })
+                let save: AlertActionTuple = (title: NSLocalizedString("保存当前音频备忘录", comment: ""), style: .Default, { action in
+                    self.save()
+                    self.state = .Initial
+                    self.performSegueWithIdentifier(.ShowVoiceList, sender: self)
+                })
+                Alert.showAlertWithSourceViewController(self, title: NSLocalizedString("您已经录制了一个音频备忘录, 请选择如何处理当前备忘录", comment: ""), message: nil, actionTuples: [cancel, delete, save])
+                return false
+            }
+        }
+        return true
+    }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let segueIdentifier = segueIdentifierForSegue(segue)
         
         switch segueIdentifier {
-        case .ShowVoiceList:()
-            // TODO: 添加录音播放播放和录制状态提醒
+        case .ShowVoiceList:
+            if let destinationVC = segue.destinationViewController as? VoiceListViewController {
+                destinationVC.playManager = playManager
+            }
         }
     }
     

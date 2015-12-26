@@ -41,7 +41,7 @@ class RecordingManager:NSObject, AVAudioRecorderDelegate {
 
     weak var delegate: RecordingManagerDelegate?
     var audioDuration: NSTimeInterval {
-        return audioRecorder?.currentTime ?? 0
+        return recordDuration
     }
     private var state  = RecordingState.Initial
     private var audioRecorder: AVAudioRecorder?
@@ -52,6 +52,7 @@ class RecordingManager:NSObject, AVAudioRecorderDelegate {
             }
         }
     }
+    private var recordDuration: NSTimeInterval = 0
     let tmpStoreURL = NSURL.fileURLWithPath(NSTemporaryDirectory()).URLByAppendingPathComponent("tmpVoice.caf")
         
     // MARK: Initializers
@@ -86,6 +87,7 @@ class RecordingManager:NSObject, AVAudioRecorderDelegate {
     func finishRecording() {
         recordTimer = nil
         state = .Finished
+        recordDuration = audioRecorder?.currentTime ?? 0
         audioRecorder?.stop()
         AudioSessionHelper.setupSessionActive(false)
     }
@@ -96,15 +98,15 @@ class RecordingManager:NSObject, AVAudioRecorderDelegate {
     
     func saveRecordedAudioWithName(name: String?) {
         do {
-            let voice: Voice = try CoreDataStack.createNewObject()
-            voice.name = name ?? NSLocalizedString("未命名", comment: "")
-            voice.date = NSDate()
-            voice.duration = audioRecorder?.currentTime ?? 0
-            voice.progress = 0
+            let voiceName = (name ?? NSLocalizedString("未命名", comment: "")) + " " + NSUUID().UUIDString
             
-            let fileName = voice.name + " " + NSUUID().UUIDString
+            let voice: Voice = try CoreDataStack.createNewObject()
+            voice.date = NSDate()
+            voice.duration = recordDuration
+            voice.name = voiceName
+            
             var storeURL = try FileHandler.getDirectoryURL()
-            storeURL = storeURL.URLByAppendingPathComponent(fileName)
+            storeURL = storeURL.URLByAppendingPathComponent(voiceName)
             try NSFileManager.defaultManager().moveItemAtURL(tmpStoreURL, toURL: storeURL)
             CoreDataStack.save()
         } catch let error {

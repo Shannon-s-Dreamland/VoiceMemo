@@ -17,6 +17,5 @@ class Voice: NSManagedObject {
     @NSManaged var name: String
     @NSManaged var date: NSDate
     @NSManaged var duration: Double
-    @NSManaged var progress: Double
 
 }

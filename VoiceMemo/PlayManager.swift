@@ -80,9 +80,6 @@ class PlayManager: NSObject {
                     player?.delegate = self
                     
                     AudioSessionHelper.setupSessionActive(true)
-                    if beginTime != nil {
-                        player?.currentTime = beginTime!
-                    }
                     player?.play()
                 } catch {
                     state = .Initial
@@ -111,8 +108,6 @@ class PlayManager: NSObject {
         }
     }
     
-    private var beginTime: NSTimeInterval?
-    
     weak var delegate: PlayManagerDelegate?
     
     // MARK: Initializers
@@ -125,17 +120,15 @@ class PlayManager: NSObject {
     
     // MARK: Convience
 
-    func playItem(item: String, atTime time: NSTimeInterval = 0) {
+    func playItem(item: String) {
         state = .Initial
         
-        beginTime = time
         currentItem = item
     }
     
-    func playTemporaryItem(item: NSURL, atTime time: NSTimeInterval = 0) {
+    func playTemporaryItem(item: NSURL) {
         state = .Initial
         
-        beginTime = time
         temporaryItem = item
     }
     
@@ -147,12 +140,29 @@ class PlayManager: NSObject {
         state = .Pause
     }
     
+    func stop() {
+        state = .Initial
+    }
+    
+    func playingVoice(voice: Voice) -> Bool {
+        return voice.name == currentItem
+    }
+    
+    func togglePlayState() {
+        if state == .Play {
+            state = .Pause
+        } else if state == .Pause {
+            state = .Play
+        }
+    }
+    
     func updateProgress() {
         if let currentTime = player?.currentTime,
             totalTime = player?.duration {
-            delegate?.updatePlayStatusWithCurrentTime(currentTime, totalTime: totalTime)
+                delegate?.updatePlayStatusWithCurrentTime(currentTime, totalTime: totalTime)
         }
     }
+    
 }
 
 // MARK: - AVAudioPlayerDelegate

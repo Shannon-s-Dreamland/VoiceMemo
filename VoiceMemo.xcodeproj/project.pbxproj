@@ -26,6 +26,7 @@
 		613B807D1C2E66CB00DFFABB /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613B807C1C2E66CB00DFFABB /* Utils.swift */; };
 		613B807F1C2E776900DFFABB /* RecordingViewController+Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613B807E1C2E776900DFFABB /* RecordingViewController+Recording.swift */; };
 		618432B01C2ED14900759CBC /* RecordingViewController+Playing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618432AF1C2ED14900759CBC /* RecordingViewController+Playing.swift */; };
+		618432B31C2ED8B400759CBC /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618432B21C2ED8B400759CBC /* CircularProgressView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		613B807C1C2E66CB00DFFABB /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		613B807E1C2E776900DFFABB /* RecordingViewController+Recording.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RecordingViewController+Recording.swift"; sourceTree = "<group>"; };
 		618432AF1C2ED14900759CBC /* RecordingViewController+Playing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RecordingViewController+Playing.swift"; sourceTree = "<group>"; };
+		618432B21C2ED8B400759CBC /* CircularProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,7 +125,7 @@
 			children = (
 				613B80801C2E779300DFFABB /* Recording  */,
 				613B80811C2E7BD800DFFABB /* Player */,
-				612545601C2D91E2006281D2 /* VoiceListViewController.swift */,
+				618432B11C2ED89900759CBC /* AudioList */,
 				612545251C2D8AB5006281D2 /* Main.storyboard */,
 				612545A51C2DAB03006281D2 /* Utils */,
 				612545551C2D8B7B006281D2 /* Data */,
@@ -215,6 +217,15 @@
 				610CA74F1C2E406400436646 /* PlayManager.swift */,
 			);
 			name = Player;
+			sourceTree = "<group>";
+		};
+		618432B11C2ED89900759CBC /* AudioList */ = {
+			isa = PBXGroup;
+			children = (
+				618432B21C2ED8B400759CBC /* CircularProgressView.swift */,
+				612545601C2D91E2006281D2 /* VoiceListViewController.swift */,
+			);
+			name = AudioList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -355,6 +366,7 @@
 				613B807D1C2E66CB00DFFABB /* Utils.swift in Sources */,
 				612545241C2D8AB5006281D2 /* RecordingViewController.swift in Sources */,
 				612545571C2D8E66006281D2 /* CoreDataStack.swift in Sources */,
+				618432B31C2ED8B400759CBC /* CircularProgressView.swift in Sources */,
 				612545221C2D8AB5006281D2 /* AppDelegate.swift in Sources */,
 				610CA7541C2E58B400436646 /* FileHandler.swift in Sources */,
 				612545611C2D91E2006281D2 /* VoiceListViewController.swift in Sources */,
