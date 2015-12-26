@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecordingViewController: UIViewController, SegueHandlerType, TextFieldAlertDelegate {
+class RecordingViewController: UIViewController, SegueHandlerType, TextFieldAlertDelegate, PlayManagerDelegate {
 
     // MARK: Properties
     
@@ -20,6 +20,11 @@ class RecordingViewController: UIViewController, SegueHandlerType, TextFieldAler
     lazy var recordingManager: RecordingManager = {
         let recordingManager = RecordingManager(delegate: self)
         return recordingManager
+    }()
+    
+    lazy var playManager: PlayManager = {
+        let playManager = PlayManager(delegate: self)
+        return playManager
     }()
 
     var audioURL: NSURL?
@@ -79,8 +84,8 @@ class RecordingViewController: UIViewController, SegueHandlerType, TextFieldAler
                 playButton.setImage(UIImage(named: "play_begin"), forState: .Normal)
                 saveButton.enabled = true
                 saveButton.alpha = 1.0
-                updateRecordedTimeInterval(recordingManager.audioDuration)
                 audioURL = recordingManager.tmpStoreURL
+                timeLabel.text = NSLocalizedString("点击播放按钮播放, 或者点击保存按钮保存", comment: "")
             case .Playing:
                 playButton.enabled = true
                 playButton.setImage(UIImage(named: "play_pause"), forState: .Normal)
@@ -95,7 +100,21 @@ class RecordingViewController: UIViewController, SegueHandlerType, TextFieldAler
     }
 
     @IBAction func playAudio(sender: UIButton) {
-        
+        if state == .Playing {
+            playManager.pause()
+            state = .PlayPaused
+        } else if state == .PlayPaused {
+            playManager.play()
+            state = .Playing
+        } else {
+            if let URL = audioURL {
+                playManager.playTemporaryItem(URL)
+                state = .Playing
+            } else {
+                assertionFailure()
+            }
+            state = .Playing
+        }
     }
     
     @IBAction func saveAudio(sender: UIButton) {

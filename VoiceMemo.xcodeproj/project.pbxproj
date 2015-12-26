@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		610CA74C1C2E2DFE00436646 /* RecordingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610CA74B1C2E2DFE00436646 /* RecordingManager.swift */; };
 		610CA74E1C2E353C00436646 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610CA74D1C2E353C00436646 /* Alert.swift */; };
-		610CA7501C2E406400436646 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610CA74F1C2E406400436646 /* AudioPlayer.swift */; };
+		610CA7501C2E406400436646 /* PlayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610CA74F1C2E406400436646 /* PlayManager.swift */; };
 		610CA7521C2E411700436646 /* AudioSessionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610CA7511C2E411700436646 /* AudioSessionHelper.swift */; };
 		610CA7541C2E58B400436646 /* FileHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610CA7531C2E58B400436646 /* FileHandler.swift */; };
 		610CA7561C2E5A6700436646 /* DateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610CA7551C2E5A6700436646 /* DateHandler.swift */; };
@@ -24,7 +24,8 @@
 		612545A21C2DA4E0006281D2 /* Voice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612545A11C2DA4E0006281D2 /* Voice.swift */; };
 		612545A71C2DB0DE006281D2 /* SegueHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612545A61C2DB0DE006281D2 /* SegueHandlerType.swift */; };
 		613B807D1C2E66CB00DFFABB /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613B807C1C2E66CB00DFFABB /* Utils.swift */; };
-		613B807F1C2E776900DFFABB /* RecordingViewController+RecordingManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613B807E1C2E776900DFFABB /* RecordingViewController+RecordingManagerDelegate.swift */; };
+		613B807F1C2E776900DFFABB /* RecordingViewController+Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613B807E1C2E776900DFFABB /* RecordingViewController+Recording.swift */; };
+		618432B01C2ED14900759CBC /* RecordingViewController+Playing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618432AF1C2ED14900759CBC /* RecordingViewController+Playing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +48,7 @@
 /* Begin PBXFileReference section */
 		610CA74B1C2E2DFE00436646 /* RecordingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingManager.swift; sourceTree = "<group>"; };
 		610CA74D1C2E353C00436646 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
-		610CA74F1C2E406400436646 /* AudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		610CA74F1C2E406400436646 /* PlayManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayManager.swift; sourceTree = "<group>"; };
 		610CA7511C2E411700436646 /* AudioSessionHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSessionHelper.swift; sourceTree = "<group>"; };
 		610CA7531C2E58B400436646 /* FileHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileHandler.swift; sourceTree = "<group>"; };
 		610CA7551C2E5A6700436646 /* DateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHandler.swift; sourceTree = "<group>"; };
@@ -68,7 +69,8 @@
 		612545A11C2DA4E0006281D2 /* Voice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Voice.swift; path = ../Voice.swift; sourceTree = "<group>"; };
 		612545A61C2DB0DE006281D2 /* SegueHandlerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueHandlerType.swift; sourceTree = "<group>"; };
 		613B807C1C2E66CB00DFFABB /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		613B807E1C2E776900DFFABB /* RecordingViewController+RecordingManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RecordingViewController+RecordingManagerDelegate.swift"; sourceTree = "<group>"; };
+		613B807E1C2E776900DFFABB /* RecordingViewController+Recording.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RecordingViewController+Recording.swift"; sourceTree = "<group>"; };
+		618432AF1C2ED14900759CBC /* RecordingViewController+Playing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RecordingViewController+Playing.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,7 +203,8 @@
 			children = (
 				610CA74B1C2E2DFE00436646 /* RecordingManager.swift */,
 				612545231C2D8AB5006281D2 /* RecordingViewController.swift */,
-				613B807E1C2E776900DFFABB /* RecordingViewController+RecordingManagerDelegate.swift */,
+				613B807E1C2E776900DFFABB /* RecordingViewController+Recording.swift */,
+				618432AF1C2ED14900759CBC /* RecordingViewController+Playing.swift */,
 			);
 			name = "Recording ";
 			sourceTree = "<group>";
@@ -209,7 +212,7 @@
 		613B80811C2E7BD800DFFABB /* Player */ = {
 			isa = PBXGroup;
 			children = (
-				610CA74F1C2E406400436646 /* AudioPlayer.swift */,
+				610CA74F1C2E406400436646 /* PlayManager.swift */,
 			);
 			name = Player;
 			sourceTree = "<group>";
@@ -347,7 +350,7 @@
 			files = (
 				610CA7561C2E5A6700436646 /* DateHandler.swift in Sources */,
 				6125452A1C2D8AB5006281D2 /* VoiceMemo.xcdatamodeld in Sources */,
-				613B807F1C2E776900DFFABB /* RecordingViewController+RecordingManagerDelegate.swift in Sources */,
+				613B807F1C2E776900DFFABB /* RecordingViewController+Recording.swift in Sources */,
 				610CA74C1C2E2DFE00436646 /* RecordingManager.swift in Sources */,
 				613B807D1C2E66CB00DFFABB /* Utils.swift in Sources */,
 				612545241C2D8AB5006281D2 /* RecordingViewController.swift in Sources */,
@@ -356,7 +359,8 @@
 				610CA7541C2E58B400436646 /* FileHandler.swift in Sources */,
 				612545611C2D91E2006281D2 /* VoiceListViewController.swift in Sources */,
 				612545A21C2DA4E0006281D2 /* Voice.swift in Sources */,
-				610CA7501C2E406400436646 /* AudioPlayer.swift in Sources */,
+				618432B01C2ED14900759CBC /* RecordingViewController+Playing.swift in Sources */,
+				610CA7501C2E406400436646 /* PlayManager.swift in Sources */,
 				612545A71C2DB0DE006281D2 /* SegueHandlerType.swift in Sources */,
 				610CA7521C2E411700436646 /* AudioSessionHelper.swift in Sources */,
 				610CA74E1C2E353C00436646 /* Alert.swift in Sources */,
