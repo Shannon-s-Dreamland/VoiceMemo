@@ -12,11 +12,11 @@
 import Foundation
 import CoreData
 
-class Voice {
+class Voice: NSManagedObject {
 
     @NSManaged var name: String
     @NSManaged var date: NSDate
-    @NSManaged var duration: Int
+    @NSManaged var duration: Double
     @NSManaged var progress: Double
-    
+
 }

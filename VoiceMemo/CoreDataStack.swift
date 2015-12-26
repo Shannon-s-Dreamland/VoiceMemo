@@ -9,6 +9,10 @@
 import Foundation
 import CoreData
 
+enum CoreDataStackError: ErrorType {
+    case CannotCreateObject
+}
+
 final class CoreDataStack {
     // MARK: - Singleton
     
@@ -21,6 +25,15 @@ final class CoreDataStack {
 
     static func save() {
         manager.saveContext()
+    }
+    
+    static func createNewObject<T: NSManagedObject>() throws -> T {
+        if let object = NSEntityDescription.insertNewObjectForEntityForName("Voice", inManagedObjectContext: manager.managedObjectContext) as? T {
+            return object
+        } else {
+            debugPrint("创建Voice失败")
+            throw CoreDataStackError.CannotCreateObject
+        }
     }
     
     static var context: NSManagedObjectContext {

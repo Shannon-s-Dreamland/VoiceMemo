@@ -19,40 +19,47 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oua-TI-btT" userLabel="Play">
-                                <rect key="frame" x="190" y="278" width="44" height="44"/>
+                                <rect key="frame" x="190.5" y="278" width="44" height="44"/>
                                 <state key="normal" image="play_begin"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RmT-hT-nsN" userLabel="Record">
-                                <rect key="frame" x="278" y="278" width="44" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="44" id="G0d-EX-61c"/>
-                                    <constraint firstAttribute="height" constant="44" id="qYI-xe-gOP"/>
-                                </constraints>
-                                <state key="normal" title="Button" image="record_pause"/>
+                                <connections>
+                                    <action selector="playAudio:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Rmk-dj-6ge"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fhG-zZ-KJ8" userLabel="Save">
-                                <rect key="frame" x="366" y="285" width="30" height="30"/>
-                                <state key="normal" title="保存">
-                                    <color key="titleColor" red="0.95294117649999999" green="0.59215686270000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
+                                <rect key="frame" x="366.5" y="285" width="30" height="30"/>
+                                <state key="normal" title="保存"/>
+                                <connections>
+                                    <action selector="saveAudio:" destination="BYZ-38-t0r" eventType="touchUpInside" id="klR-q0-HqI"/>
+                                </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bdq-MG-Aoh" userLabel="Time">
-                                <rect key="frame" x="300" y="234" width="0.0" height="0.0"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bdq-MG-Aoh" userLabel="Time">
+                                <rect key="frame" x="293" y="214" width="15.5" height="19.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="record_begin" highlightedImage="record_pause" translatesAutoresizingMaskIntoConstraints="NO" id="WmL-DA-hRA">
+                                <rect key="frame" x="278.5" y="277.5" width="44" height="44"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="1Mu-PF-FVf"/>
+                                    <constraint firstAttribute="height" constant="44" id="Chp-aB-1rA"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="4Jw-Bd-CPe" appends="YES" id="0TA-6U-nmp"/>
+                                </connections>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="RmT-hT-nsN" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="1a4-M3-H78"/>
-                            <constraint firstItem="RmT-hT-nsN" firstAttribute="leading" secondItem="oua-TI-btT" secondAttribute="trailing" constant="44" id="9GF-ow-B9Q"/>
-                            <constraint firstItem="oua-TI-btT" firstAttribute="centerY" secondItem="RmT-hT-nsN" secondAttribute="centerY" id="GVc-9M-fAT"/>
-                            <constraint firstItem="fhG-zZ-KJ8" firstAttribute="leading" secondItem="RmT-hT-nsN" secondAttribute="trailing" constant="44" id="TAe-F9-5Sv"/>
-                            <constraint firstItem="bdq-MG-Aoh" firstAttribute="centerX" secondItem="RmT-hT-nsN" secondAttribute="centerX" id="UUv-Lw-Zm5"/>
-                            <constraint firstItem="RmT-hT-nsN" firstAttribute="top" secondItem="bdq-MG-Aoh" secondAttribute="bottom" constant="44" id="W4X-8q-8eO"/>
-                            <constraint firstItem="fhG-zZ-KJ8" firstAttribute="centerY" secondItem="RmT-hT-nsN" secondAttribute="centerY" id="pju-O6-wLd"/>
-                            <constraint firstItem="RmT-hT-nsN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="q9z-2e-0aN"/>
+                            <constraint firstItem="WmL-DA-hRA" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="21H-6G-TOu"/>
+                            <constraint firstItem="WmL-DA-hRA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Dqw-cA-htc"/>
+                            <constraint firstItem="bdq-MG-Aoh" firstAttribute="centerX" secondItem="WmL-DA-hRA" secondAttribute="centerX" id="Ijl-73-hh2"/>
+                            <constraint firstItem="fhG-zZ-KJ8" firstAttribute="leading" secondItem="WmL-DA-hRA" secondAttribute="trailing" constant="44" id="SXw-Yd-VBa"/>
+                            <constraint firstItem="fhG-zZ-KJ8" firstAttribute="centerY" secondItem="WmL-DA-hRA" secondAttribute="centerY" id="U2B-Qt-SHm"/>
+                            <constraint firstItem="WmL-DA-hRA" firstAttribute="top" secondItem="bdq-MG-Aoh" secondAttribute="bottom" constant="44" id="jgD-dU-JDN"/>
+                            <constraint firstItem="oua-TI-btT" firstAttribute="centerY" secondItem="WmL-DA-hRA" secondAttribute="centerY" id="ueG-l9-3Sh"/>
+                            <constraint firstItem="WmL-DA-hRA" firstAttribute="leading" secondItem="oua-TI-btT" secondAttribute="trailing" constant="44" id="zeD-JY-d1w"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="录音" id="zVy-3i-3tW">
@@ -65,12 +72,17 @@
                     </navigationItem>
                     <connections>
                         <outlet property="playButton" destination="oua-TI-btT" id="i93-oF-tUz"/>
-                        <outlet property="recordButton" destination="RmT-hT-nsN" id="dXv-b9-TEI"/>
+                        <outlet property="recordImageView" destination="WmL-DA-hRA" id="YUw-zw-cCq"/>
                         <outlet property="saveButton" destination="fhG-zZ-KJ8" id="hKY-hv-z5J"/>
                         <outlet property="timeLabel" destination="bdq-MG-Aoh" id="cac-nU-ESF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="4Jw-Bd-CPe" userLabel="Record Gesture">
+                    <connections>
+                        <action selector="recordAudio:" destination="BYZ-38-t0r" id="B5D-kb-sxx"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1103" y="387"/>
         </scene>
@@ -169,6 +181,7 @@
     <resources>
         <image name="list" width="44" height="44"/>
         <image name="play_begin" width="44" height="44"/>
+        <image name="record_begin" width="44" height="44"/>
         <image name="record_pause" width="44" height="44"/>
     </resources>
     <color key="tintColor" red="0.95294117649999999" green="0.59215686270000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

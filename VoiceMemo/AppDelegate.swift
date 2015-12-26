@@ -18,8 +18,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func applicationWillTerminate(application: UIApplication) {
-        CoreDataStack.save()
-    }
-    
 }
