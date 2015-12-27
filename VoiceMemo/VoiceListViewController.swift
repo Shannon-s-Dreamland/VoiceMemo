@@ -27,9 +27,8 @@ class VoiceListCell: UITableViewCell {
             switch state {
             case .NotCurrent:
                 progressView.progress = 0
-                progressView.hidden = true
-            case .Current:
-                progressView.hidden = false
+                progressView.iconStyle = .Play
+            case .Current:()
             }
         }
     }
@@ -38,7 +37,10 @@ class VoiceListCell: UITableViewCell {
         titleLabel.text = voice.name.segmentsWithSeparator().first!
         dateLabel.text = voice.date.stringValue
         durationLabel.text = voice.duration.format(2) + " s"
-        progressView.progress = 0.0
+    }
+    
+    override func prepareForReuse() {
+        state = .NotCurrent
     }
 }
 
@@ -60,6 +62,16 @@ class VoiceListViewController: UITableViewController {
         }
         return nil
     }
+    var shouldRestorePlayingIndexpath = false
+    var previousPlayingIndexpath: NSIndexPath?
+    var previousVell: VoiceListCell? {
+        if let indexPath = previousPlayingIndexpath,
+            cell = tableView.cellForRowAtIndexPath(indexPath) as? VoiceListCell {
+                return cell
+        }
+        return nil
+    }
+    
     var playingIndexpath: NSIndexPath? {
         didSet {
             if playingIndexpath == oldValue {
@@ -75,11 +87,8 @@ class VoiceListViewController: UITableViewController {
                 }
             }
             
-            if let indexPath = oldValue,
-                cell = tableView.cellForRowAtIndexPath(indexPath) as? VoiceListCell {
-                    if playingIndexpath != nil {
-                        cell.state = .NotCurrent
-                    }
+            if previousPlayingIndexpath != nil && playingIndexpath != nil {
+                previousVell?.state = .NotCurrent
             }
             if let indexPath = playingIndexpath,
                 cell = tableView.cellForRowAtIndexPath(indexPath) as? VoiceListCell {
@@ -132,6 +141,10 @@ class VoiceListViewController: UITableViewController {
         }
     }
 
+    func restoreCell(cell: VoiceListCell) {
+        cell.progressView.progress = 1.0
+        cell.progressView.iconStyle = .Play
+    }
 
 }
 
@@ -174,10 +187,21 @@ extension VoiceListViewController {
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         let voice = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Voice
         (cell as! VoiceListCell).configureCellWithVoice(voice)
+        
+        if indexPath == previousPlayingIndexpath && shouldRestorePlayingIndexpath {
+            restoreCell(cell as! VoiceListCell)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath == previousPlayingIndexpath {
+            shouldRestorePlayingIndexpath = true
+        }
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         playingIndexpath = indexPath
+        previousPlayingIndexpath = nil
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 }
@@ -216,11 +240,7 @@ extension VoiceListViewController: NSFetchedResultsControllerDelegate {
 extension VoiceListViewController: PlayManagerDelegate {
     func updatePlayStatusWithCurrentTime(currentTime: NSTimeInterval, totalTime: NSTimeInterval) {
         let progress = currentTime / totalTime
-        
-        if let indexPath = playingIndexpath,
-            cell = tableView.cellForRowAtIndexPath(indexPath) as? VoiceListCell {
-                cell.progressView.progress = CGFloat(progress)
-        }
+        currentCell?.progressView.progress = CGFloat(progress)
     }
     
     func playerDidChangeToState(state: PlaybackState) {
@@ -231,8 +251,14 @@ extension VoiceListViewController: PlayManagerDelegate {
              .Pause:
             currentCell?.progressView.iconStyle = .Play
         case .Finished:
-            currentCell?.progressView.progress = 1.0
-            currentCell?.progressView.iconStyle = .Play
+            if currentCell == nil {
+                shouldRestorePlayingIndexpath = true
+            } else {
+                currentCell?.progressView.progress = 1.0
+                currentCell?.progressView.iconStyle = .Play
+                shouldRestorePlayingIndexpath = false
+            }
+            previousPlayingIndexpath = playingIndexpath
             playingIndexpath = nil
         }
     }
