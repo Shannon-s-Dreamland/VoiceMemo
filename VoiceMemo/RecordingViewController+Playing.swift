@@ -15,7 +15,8 @@ extension RecordingViewController {
     
     func playerDidChangeToState(state: PlaybackState) {
         switch state {
-        case .Initial:
+        case .Initial,
+             .Finished:
             self.state = .RecordingFinished
         case .Pause,
         .Play:()

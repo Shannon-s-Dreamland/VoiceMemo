@@ -23,6 +23,7 @@ enum PlaybackState {
     case Initial
     case Play
     case Pause
+    case Finished
 }
 
 // MARK: - Play Manager
@@ -44,11 +45,11 @@ class PlayManager: NSObject {
     private var state: PlaybackState = .Initial {
         didSet {
             switch state {
-            case .Initial:
+            case .Initial,
+                 .Finished:
                 player = nil
                 playTimer = nil
                 currentItem = nil
-                temporaryItem = nil
                 AudioSessionHelper.setupSessionActive(false)
             case .Play:
                 playTimer = nil
@@ -66,17 +67,12 @@ class PlayManager: NSObject {
                 }
                 
                 do {
-                    let url: NSURL
-                    if let currentItem = currentItem {
-                        url = try FileHandler.getDirectoryURL().URLByAppendingPathComponent(currentItem)
-                    } else if let temporaryItem = temporaryItem {
-                        url = temporaryItem
-                    } else {
+                    guard currentItem != nil else {
                         assertionFailure()
+                        state = .Initial
                         return
                     }
-                    
-                    try player = AVAudioPlayer(contentsOfURL: url)
+                    try player = AVAudioPlayer(contentsOfURL: currentItem!)
                     player?.delegate = self
                     
                     AudioSessionHelper.setupSessionActive(true)
@@ -94,16 +90,9 @@ class PlayManager: NSObject {
         }
     }
 
-    private var currentItem: String? {
+    private var currentItem: NSURL? {
         didSet {
-            if currentItem == nil { return }
-            state = .Play
-        }
-    }
-    
-    private var temporaryItem: NSURL? {
-        didSet {
-            if temporaryItem == nil { return }
+            guard currentItem != nil else { return }
             state = .Play
         }
     }
@@ -120,24 +109,10 @@ class PlayManager: NSObject {
     
     // MARK: Convience
 
-    func playItem(item: String) {
+    func playItem(item: NSURL) {
         state = .Initial
         
         currentItem = item
-    }
-    
-    func playTemporaryItem(item: NSURL) {
-        state = .Initial
-        
-        temporaryItem = item
-    }
-    
-    func play() {
-        state = .Play
-    }
-    
-    func pause() {
-        state = .Pause
     }
     
     func stop() {
@@ -145,7 +120,7 @@ class PlayManager: NSObject {
     }
     
     func playingVoice(voice: Voice) -> Bool {
-        return voice.name == currentItem
+        return voice.name == currentItem?.lastPathComponent
     }
     
     func togglePlayState() {
@@ -171,7 +146,7 @@ extension PlayManager: AVAudioPlayerDelegate {
     
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         if flag {
-            state = .Initial
+            state = .Finished
         }
     }
     

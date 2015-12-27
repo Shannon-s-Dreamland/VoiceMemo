@@ -18,4 +18,14 @@ class Voice: NSManagedObject {
     @NSManaged var date: NSDate
     @NSManaged var duration: Double
 
+    
+    func fetchPathURL() -> NSURL? {
+        do {
+            let URL = try FileHandler.getDirectoryURL().URLByAppendingPathComponent(name)
+            return URL
+        } catch {
+            assertionFailure()
+            return nil
+        }
+    }
 }

@@ -77,13 +77,19 @@ class VoiceListViewController: UITableViewController {
             
             if let indexPath = oldValue,
                 cell = tableView.cellForRowAtIndexPath(indexPath) as? VoiceListCell {
-                    cell.state = .NotCurrent
+                    if playingIndexpath != nil {
+                        cell.state = .NotCurrent
+                    }
             }
             if let indexPath = playingIndexpath,
                 cell = tableView.cellForRowAtIndexPath(indexPath) as? VoiceListCell {
                     let voice = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Voice
                     cell.state = .Current
-                    playManager?.playItem(voice.name)
+                    if let URL = voice.fetchPathURL() {
+                        playManager?.playItem(URL)
+                    } else {
+                        assertionFailure()
+                    }
             }
         }
     }
@@ -224,6 +230,10 @@ extension VoiceListViewController: PlayManagerDelegate {
         case .Initial,
              .Pause:
             currentCell?.progressView.iconStyle = .Play
+        case .Finished:
+            currentCell?.progressView.progress = 1.0
+            currentCell?.progressView.iconStyle = .Play
+            playingIndexpath = nil
         }
     }
     

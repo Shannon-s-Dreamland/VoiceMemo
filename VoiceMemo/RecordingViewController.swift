@@ -133,14 +133,14 @@ class RecordingViewController: UIViewController, SegueHandlerType, TextFieldAler
 
     @IBAction func playAudio(sender: UIButton) {
         if state == .Playing {
-            playManager.pause()
+            playManager.togglePlayState()
             state = .PlayPaused
         } else if state == .PlayPaused {
-            playManager.play()
+            playManager.togglePlayState()
             state = .Playing
         } else {
             if let URL = audioURL {
-                playManager.playTemporaryItem(URL)
+                playManager.playItem(URL)
                 state = .Playing
             } else {
                 assertionFailure()
