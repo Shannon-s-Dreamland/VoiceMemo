@@ -11,11 +11,28 @@ import CoreData
 
 // MARK: - VoiceListCell
 
+enum VoiceListCellState {
+    case NotCurrent
+    case Current
+}
+
 class VoiceListCell: UITableViewCell {
     @IBOutlet weak var progressView: CircularProgressView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
+    
+    var state = VoiceListCellState.NotCurrent {
+        didSet {
+            switch state {
+            case .NotCurrent:
+                progressView.progress = 0
+                progressView.hidden = true
+            case .Current:
+                progressView.hidden = false
+            }
+        }
+    }
     
     func configureCellWithVoice(voice: Voice) {
         titleLabel.text = voice.name.segmentsWithSeparator().first!
@@ -36,25 +53,37 @@ class VoiceListViewController: UITableViewController {
         }
     }
     var currentVoice: Voice?
-    var playingCell: VoiceListCell? {
-        willSet {
-            if newValue == nil {
-                assertionFailure("不应该为空 Cell")
-            }
+    var currentCell: VoiceListCell? {
+        if let indexPath = playingIndexpath,
+            cell = tableView.cellForRowAtIndexPath(indexPath) as? VoiceListCell {
+                return cell
         }
+        return nil
+    }
+    var playingIndexpath: NSIndexPath? {
         didSet {
-            if playingCell == oldValue {
-                playManager?.togglePlayState()
-                return
+            if playingIndexpath == oldValue {
+                if let cell = tableView.cellForRowAtIndexPath(playingIndexpath!) as? VoiceListCell {
+                    if cell.progressView.iconStyle == .Play {
+                        cell.progressView.iconStyle = .Pause
+                    } else {
+                        cell.progressView.iconStyle = .Play
+                    }
+                    
+                    playManager?.togglePlayState()
+                    return
+                }
             }
             
-            oldValue?.progressView.hidden = true
-            playingCell?.progressView.hidden = false
-            
-            if let cell = playingCell,
-                indexPath = tableView.indexPathForCell(cell) {
-                let voice = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Voice
-                playManager?.playItem(voice.name)
+            if let indexPath = oldValue,
+                cell = tableView.cellForRowAtIndexPath(indexPath) as? VoiceListCell {
+                    cell.state = .NotCurrent
+            }
+            if let indexPath = playingIndexpath,
+                cell = tableView.cellForRowAtIndexPath(indexPath) as? VoiceListCell {
+                    let voice = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Voice
+                    cell.state = .Current
+                    playManager?.playItem(voice.name)
             }
         }
     }
@@ -142,7 +171,7 @@ extension VoiceListViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        playingCell = tableView.cellForRowAtIndexPath(indexPath) as? VoiceListCell
+        playingIndexpath = indexPath
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 }
@@ -181,25 +210,20 @@ extension VoiceListViewController: NSFetchedResultsControllerDelegate {
 extension VoiceListViewController: PlayManagerDelegate {
     func updatePlayStatusWithCurrentTime(currentTime: NSTimeInterval, totalTime: NSTimeInterval) {
         let progress = currentTime / totalTime
-        if let cell = playingCell {
-            cell.progressView.progress = CGFloat(progress)
-        } else {
-            assertionFailure()
+        
+        if let indexPath = playingIndexpath,
+            cell = tableView.cellForRowAtIndexPath(indexPath) as? VoiceListCell {
+                cell.progressView.progress = CGFloat(progress)
         }
     }
     
     func playerDidChangeToState(state: PlaybackState) {
-        if let cell = playingCell {
-            switch state {
-            case .Play:
-                cell.progressView.iconStyle = .Pause
-            case .Pause:
-                cell.progressView.iconStyle = .Play
-            case .Initial:
-                cell.progressView.iconStyle = .Play
-            }
-        } else {
-            assertionFailure()
+        switch state {
+        case .Play:
+            currentCell?.progressView.iconStyle = .Pause
+        case .Initial,
+             .Pause:
+            currentCell?.progressView.iconStyle = .Play
         }
     }
     
